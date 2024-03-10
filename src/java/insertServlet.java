@@ -56,10 +56,14 @@ public class insertServlet extends HttpServlet {
                 con = DriverManager.getConnection(url,"root","");
                 st = con.createStatement();
                 String rollNoParam = request.getParameter("roll_no");
-                    int rn = (rollNoParam != null && !rollNoParam.isEmpty()) ? Integer.parseInt(rollNoParam) : 0;
-                    String fn = request.getParameter("f_name");
-                    String ln = request.getParameter("l_name");
-                    String s = request.getParameter("stream");
+                int rn = Integer.parseInt(rollNoParam);
+                String fn = request.getParameter("f_name");
+                String ln = request.getParameter("l_name");
+                String s = request.getParameter("stream");
+                ResultSet r = st.executeQuery("select roll_no from student where roll_no="+rollNoParam+"");
+                if(r.next()){
+                    out.println("<tr><td>Insert Unuccessfull!<td></tr>");
+                }else{
                     String query = "INSERT INTO student(roll_no, f_name, l_name, stream) VALUES(?,?,?,?)";
                     p = con.prepareStatement(query);
                     p.setInt(1, rn);
@@ -70,10 +74,11 @@ public class insertServlet extends HttpServlet {
                     if(rows>=1){
                         out.println("<tr><td>Insert Successfully!<td></tr>");
                     }
-                    else{
-                        out.println("<tr><td>Insert Unuccessfull!<td></tr>");
-                    }
+//                    else{
+//                        out.println("<tr><td>Insert Unuccessfull!<td></tr>");
+//                    }
                     out.println("Done");
+                }
             }catch(Exception e){
                 e.printStackTrace();
             }

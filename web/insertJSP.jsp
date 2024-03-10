@@ -10,12 +10,24 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style>
+            table{
+                width:50%;
+                height: 100px;
+                margin-top: 100px;
+                font-size: 25px;
+            }
+            input{
+                padding: 10px;
+                margin: 10px;
+            }
+        </style>
     </head>
     <body>
         
         
         <form  action="insertServlet" method="POST">
-            <table>
+            <table cellspacing = 0 align="center" border="1">
                 <tr>
                     <td>Roll No: </td>
                     <td><input type="number" name="roll_no"></td>
@@ -33,7 +45,7 @@
                     <td><input type="text" name="stream"></td>
                 </tr>
                 <tr>
-                    <td colspan="1"><input type="submit" value="Submit" name="submit"></td>
+                    <td colspan="2" align="center"><input type="submit" value="Submit" name="submit"></td>
                     <td></td>
                 </tr>
                 
