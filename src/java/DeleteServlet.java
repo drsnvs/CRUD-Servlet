@@ -66,14 +66,17 @@ public class DeleteServlet extends HttpServlet {
                 con = DriverManager.getConnection(url,"root","");
                 st = con.createStatement();
                 ResultSet rs  = st.executeQuery("select * from student");
-                while(rs.next()){
-                    // out.println("<td>"+rs.getInt("roll_no")+"</td><td>"+rs.getString("f_name")+"</td><td>"+rs.getString("l_name")+"</td><td>"+rs.getString("stream")+"</td><td><a href=\"DeleteServlet?roll_no=\" "+rs.getInt("roll_no")+">Delete</a></td></tr>");
-                    out.println("<td>" + rs.getInt("roll_no") + "</td><td>" + rs.getString("f_name") + "</td><td>" + rs.getString("l_name") + "</td><td>" + rs.getString("stream") + "</td><td><a href=\"DeleteServlet?roll_no=" + rs.getInt("roll_no") + "\">Delete</a></td></tr>");
-
-                }
                 String query = "DELETE FROM student WHERE roll_no = ?";
                 PreparedStatement pst = con.prepareStatement(query);
                 String rollNoParam = request.getParameter("roll_no");
+                while(rs.next()){
+                    // out.println("<td>"+rs.getInt("roll_no")+"</td><td>"+rs.getString("f_name")+"</td><td>"+rs.getString("l_name")+"</td><td>"+rs.getString("stream")+"</td><td><a href=\"DeleteServlet?roll_no=\" "+rs.getInt("roll_no")+">Delete</a></td></tr>");
+                    out.println("<td>" + rs.getInt("roll_no") + "</td><td>" + rs.getString("f_name") + "</td><td>" + rs.getString("l_name") + "</td><td>" + rs.getString("stream") + "</td><td><a  href=\"DeleteServlet?roll_no=" + rs.getInt("roll_no") + "\">Delete</a></td></tr>");
+
+                }
+//                String query = "DELETE FROM student WHERE roll_no = ?";
+//                PreparedStatement pst = con.prepareStatement(query);
+//                String rollNoParam = request.getParameter("roll_no");
     
     // Convert roll_no parameter to integer
                 if (rollNoParam != null && !rollNoParam.isEmpty()) {
@@ -100,7 +103,12 @@ public class DeleteServlet extends HttpServlet {
             }catch(Exception e){
                 e.printStackTrace();
             }
-            
+            out.println("<script>"
+                    + "function autoRefresh() {\n" +
+                        "            window.location = window.location.href;\n" +
+                        "        }\n" +
+                        "        setInterval('autoRefresh()', 2000);"
+                    + "</script>");
             out.println("</body>");
             out.println("</html>");
         }
