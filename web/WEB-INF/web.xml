@@ -8,9 +8,25 @@
         <servlet-name>insertServlet</servlet-name>
         <servlet-class>insertServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>displayServlet</servlet-name>
+        <servlet-class>displayServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteServlet</servlet-name>
+        <servlet-class>DeleteServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>insertServlet</servlet-name>
         <url-pattern>/insertServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>displayServlet</servlet-name>
+        <url-pattern>/displayServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteServlet</servlet-name>
+        <url-pattern>/DeleteServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

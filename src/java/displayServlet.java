@@ -3,21 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.sql.*;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author DARSHAN
  */
-public class insertServlet extends HttpServlet {
+public class displayServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,57 +35,53 @@ public class insertServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        session.setAttribute("name", "Darshan");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet insertServlet</title>");      
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<table border=1 cellspacing=0 align='center'>");
+            out.println("<title>Servlet displayServlet</title>");            
+            out.println("</head><style>\n" +
+                        "            table{\n" +
+                        "                width:50%;\n" +
+                        "                height: 100px;\n" +
+                        "                margin-top: 100px;\n" +
+                        "                font-size: 25px;\n" +
+                        "            }\n" +
+                        "            input{\n" +
+                        "                padding: 10px;\n" +
+                        "                margin:0px;\n" +
+                        "            }\n" +
+                        "        </style>");
+            out.println("<body><h1 align='center'>Display Data</h1><table border=1 cellspacing=0 align='center'><tr><th>Roll No</th><th>First Name</th><th>Last Name</th><th>Stream</th></tr><tr>");
             
             Connection con = null;
 //            ResultSet rs = null;
             Statement st = null;
             ServletContext sc = getServletContext();
             String url = null;
-            PreparedStatement p = null;
             try{
                 Class.forName("com.mysql.jdbc.Driver");
                 url = sc.getInitParameter("url");
                 con = DriverManager.getConnection(url,"root","");
                 st = con.createStatement();
-                String rollNoParam = request.getParameter("roll_no");
-                int rn = Integer.parseInt(rollNoParam);
-                String fn = request.getParameter("f_name");
-                String ln = request.getParameter("l_name");
-                String s = request.getParameter("stream");
-                ResultSet r = st.executeQuery("select roll_no from student where roll_no="+rollNoParam+"");
-                if(r.next()){
-                    out.println("<tr><td>Already inserted!</td></tr>");
-                }else{
-                    String query = "INSERT INTO student(roll_no, f_name, l_name, stream) VALUES(?,?,?,?)";
-                    p = con.prepareStatement(query);
-                    p.setInt(1, rn);
-                    p.setString(2, fn);
-                    p.setString(3, ln);
-                    p.setString(4, s);
-                    int rows = p.executeUpdate();
-                    if(rows>=1){
-                        out.println("<tr><td>Insert Successfully!</td></tr>");
-                    }
-//                    else{
-//                        out.println("<tr><td>Insert Unuccessfull!<td></tr>");
-//                    }
+                ResultSet rs  = st.executeQuery("select * from student");
+                while(rs.next()){
+                    out.println("<td>"+rs.getInt("roll_no")+"</td><td>"+rs.getString("f_name")+"</td><td>"+rs.getString("l_name")+"</td><td>"+rs.getString("stream")+"</td></tr>");
+                    
                 }
-                out.println("</table></body>");
-                out.println("</html>");
+//                String rollNoParam = request.getParameter("roll_no");
+//                int rn = Integer.parseInt(rollNoParam);
+//                String fn = request.getParameter("f_name");
+//                String ln = request.getParameter("l_name");
+//                String s = request.getParameter("stream");
+//                
             }catch(Exception e){
                 e.printStackTrace();
             }
+            
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
