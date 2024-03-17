@@ -51,9 +51,19 @@ public class DeleteServlet extends HttpServlet {
                         "            input{\n" +
                         "                padding: 10px;\n" +
                         "                margin:0px;\n" +
+                        "            }th{\n" +
+                        "                background-color: aquamarine;\n" +
+                        "            }td{\n" +
+                        "                background-color: aqua;\n" +
+                        "            }\n" +
+                        "            body{\n" +
+                        "                background-color: antiquewhite;\n" +
+                        "            }\n" +
+                        "            input{\n" +
+                        "                background-color: aquamarine;\n" +
                         "            }\n" +
                         "        </style>");
-            out.println("<body><h1 align='center'>Display Data</h1><table border=1 cellspacing=0 align='center'><tr><th>Roll No</th><th>First Name</th><th>Last Name</th><th>Stream</th><th>Delete</th></tr></tr><tr>");
+            out.println("<body><h1 align='center'>Delete Data</h1><table border=1 cellspacing=0 align='center'><tr><th>Roll No</th><th>First Name</th><th>Last Name</th><th>Stream</th><th>Delete</th></tr></tr><tr>");
             
             Connection con = null;
 //            ResultSet rs = null;
