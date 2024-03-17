@@ -60,7 +60,20 @@ public class updateServlet2 extends HttpServlet {
             out.println("<head>");
             out.println("<title>Servlet updateServlet2</title>");            
             out.println("</head>");
-            out.println("<body>");
+            out.println("<body><style>"
+                    + "th{\n" +
+                        "                background-color: aquamarine;\n" +
+                        "            }\n" +
+                        "            td{\n" +
+                        "                background-color: aqua;\n" +
+                        "            }\n" +
+                        "            body{\n" +
+                        "                background-color: antiquewhite;\n" +
+                        "            }\n" +
+                        "            button{\n" +
+                        "                background-color: aquamarine;\n" +
+                        "            }"
+                    + "</style>");
             out.println("<table border=1 cellspacing=0 align='center'>");
             if(check>=1){
                 out.println("<tr><td>Data updated!</td></tr>");

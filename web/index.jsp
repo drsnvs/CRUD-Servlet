@@ -21,12 +21,24 @@
                 padding: 10px;
                 margin:0px;
             }
+            th{
+                background-color: aquamarine;
+            }
+            td{
+                background-color: aqua;
+            }
+            body{
+                background-color: antiquewhite;
+            }
+            input{
+                background-color: aquamarine;
+            }
         </style>
     </head>
     <body>
         <table cellspacing = 0 align="center" border="1">
             <tr>
-                <th colspan="4">Student Table</th>
+                <th colspan="4" >Student Table</th>
             </tr>
             <tr>
                 <td align="center"><a href="insertJSP.jsp"><input type="button" value="Insert"/></a></td>

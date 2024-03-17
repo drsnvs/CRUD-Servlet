@@ -20,38 +20,70 @@
             input{
                 padding: 10px;
                 margin: 10px;
+                background-color: aquamarine;
+            }
+            
+            td,th{
+                background-color: aqua;
+            }
+            body{
+                background-color: antiquewhite;
             }
         </style>
     </head>
     <body>
         
         
-        <form  action="insertServlet" method="POST">
+        <form  action="insertServlet" method="POST" onsubmit="return validation()">
             <table cellspacing = 0 align="center" border="1">
                 <tr>
-                    <td>Roll No: </td>
-                    <td><input type="number" name="roll_no"></td>
+                    <th>Roll No </th>
+                    <td><input type="number" id="roll_no" name="roll_no"></td>
                 </tr>
                 <tr>
-                    <td>First Name: </td>
-                    <td><input type="text" name="f_name"></td>
+                    <th>First Name </th>
+                    <td><input type="text" id="first_name" name="f_name"></td>
                 </tr>
                 <tr>
-                    <td>Last Name: </td>
-                    <td><input type="text" name="l_name"></td>
+                    <th>Last Name </th>
+                    <td><input type="text" id="last_name" name="l_name"></td>
                 </tr>
                 <tr>
-                    <td>Stream: </td>
-                    <td><input type="text" name="stream"></td>
+                    <th>Stream </th>
+                    <td><input type="text" id="stream" name="stream"></td>
                 </tr>
                 <tr>
-                    <td colspan="2" align="center"><input type="submit" value="Submit" name="submit"></td>
-                    <td></td>
+                    <td colspan="2" align="center"><input type="submit" value="Insert" name="submit"></td>
+                    
                 </tr>
                 
                 
             </table>
         </form> 
+        <script>
+            function validation(){
+                var rn = document.getElementById("roll_no").value;
+                var fn = document.getElementById("first_name").value;
+                var ln = document.getElementById("last_name").value;
+                var s = document.getElementById("stream").value;
+                if(rn == ""){
+                    alert("Enter roll number");
+                    return false;
+                }
+                if(fn == ""){
+                    alert("Enter first name");
+                    return false;
+                }
+                if(ln == ""){
+                    alert("Enter last name");
+                    return false;
+                }
+                if(s == ""){
+                    alert("Enter stream");
+                    return false;
+                }
+            }
+        </script>
     </body>
 </html>
 

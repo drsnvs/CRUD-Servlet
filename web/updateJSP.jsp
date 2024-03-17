@@ -15,6 +15,26 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style>
+            table{
+                width:50%;
+                height: 100px;
+                margin-top: 100px;
+                font-size: 25px;
+            }
+            input{
+                padding: 10px;
+                margin: 10px;
+                background-color: aquamarine;
+            }
+            
+            td,th{
+                background-color: aqua;
+            }
+            body{
+                background-color: antiquewhite;
+            }
+        </style>
     </head>
     <body>
         <h1 align="center">Update</h1>
