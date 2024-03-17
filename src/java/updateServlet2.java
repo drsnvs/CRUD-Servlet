@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.sql.*;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author DARSHAN
  */
-public class insertServlet extends HttpServlet {
+public class updateServlet2 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,60 +32,48 @@ public class insertServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        ServletContext sc = getServletContext();
         HttpSession session = request.getSession();
-        session.setAttribute("name", "Darshan");
+        
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            Connection con = null;
+            Statement st = null;
+            
+            String url = sc.getInitParameter("url");
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(url,"root","");
+            st = con.createStatement();
+            
+            PreparedStatement pr = con.prepareStatement("update student set f_name=?,l_name=?,stream=? where roll_no="+request.getParameter("roll_no")+";");
+//            pr.setInt(1, Integer.parseInt((String) request.getParameter("roll_no")));
+            pr.setString(1, request.getParameter("fname"));
+            pr.setString(2, (String) request.getParameter("lname"));
+            pr.setString(3, (String) request.getParameter("stream"));
+//            pr.setInt(4, Integer.parseInt((String) request.getParameter("roll_no")));
+            int check = pr.executeUpdate();
+            
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet insertServlet</title>");      
+            out.println("<title>Servlet updateServlet2</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<table border=1 cellspacing=0 align='center'>");
-            
-            Connection con = null;
-//            ResultSet rs = null;
-            Statement st = null;
-            ServletContext sc = getServletContext();
-            String url = null;
-            PreparedStatement p = null;
-            try{
-                Class.forName("com.mysql.jdbc.Driver");
-                url = sc.getInitParameter("url");
-                con = DriverManager.getConnection(url,"root","");
-                st = con.createStatement();
-                String rollNoParam = request.getParameter("roll_no");
-                int rn = Integer.parseInt(rollNoParam);
-                String fn = request.getParameter("f_name");
-                String ln = request.getParameter("l_name");
-                String s = request.getParameter("stream");
-                ResultSet r = st.executeQuery("select roll_no from student where roll_no="+rollNoParam+"");
-                if(r.next()){
-                    out.println("<tr><td>Already inserted!</td></tr>");
-                    out.println("<tr><td align='center'><button onclick=\"document.location='index.jsp'\">Home</button></td></tr>");
-                }else{
-                    String query = "INSERT INTO student(roll_no, f_name, l_name, stream) VALUES(?,?,?,?)";
-                    p = con.prepareStatement(query);
-                    p.setInt(1, rn);
-                    p.setString(2, fn);
-                    p.setString(3, ln);
-                    p.setString(4, s);
-                    int rows = p.executeUpdate();
-                    if(rows>=1){
-                        out.println("<tr><td>Insert Successfully!</td></tr>");
-                        out.println("<tr><td align='center'><button onclick=\"document.location='index.jsp'\">Home</button></td></tr>");
-                    }
-//                    else{
-//                        out.println("<tr><td>Insert Unuccessfull!<td></tr>");
-//                    }
-                }
-                out.println("</table></body>");
-                out.println("</html>");
-            }catch(Exception e){
-                e.printStackTrace();
+            if(check>=1){
+                out.println("<tr><td>Data updated!</td></tr>");
+                out.println("<tr><td align='center'><button onclick=\"document.location='index.jsp'\">Home</button></td></tr>");
+                
+            }else{
+                out.println("<tr><td>Data cannot updated!</td></tr>");
             }
+            
+            out.println("</table></body>");
+            out.println("</html>");
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

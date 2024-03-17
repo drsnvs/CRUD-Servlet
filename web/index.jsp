@@ -30,7 +30,7 @@
             </tr>
             <tr>
                 <td align="center"><a href="insertJSP.jsp"><input type="button" value="Insert"/></a></td>
-                <td align="center"><a href="#"><input type="button" value="Update"/></a></td>
+                <td align="center"><a href="updateServlet"><input type="button" value="Update"/></a></td>
                 <td align="center"><a href="DeleteServlet"><input type="button" value="Delete"/></a></td>
                 <td align="center"><a href="displayServlet"><input type="button" value="Display"/></a></td>
             </tr>
