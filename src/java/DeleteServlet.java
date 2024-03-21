@@ -10,12 +10,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -51,22 +53,23 @@ public class DeleteServlet extends HttpServlet {
                         "            input{\n" +
                         "                padding: 10px;\n" +
                         "                margin:0px;\n" +
-                        "            }th{\n" +
+                        "            }\n"
+                                            + "th{\n" +
                         "                background-color: aquamarine;\n" +
-                        "            }td{\n" +
+                        "            }\n" +
+                        "            td{\n" +
                         "                background-color: aqua;\n" +
                         "            }\n" +
                         "            body{\n" +
                         "                background-color: antiquewhite;\n" +
                         "            }\n" +
                         "            input{\n" +
-                        "                background-color: aquamarine;\n" +
-                        "            }\n" +
+                        "                width:100%;background-color: aquamarine;\n" +
+                        "            }" +
                         "        </style>");
-            out.println("<body><h1 align='center'>Delete Data</h1><table border=1 cellspacing=0 align='center'><tr><th>Roll No</th><th>First Name</th><th>Last Name</th><th>Stream</th><th>Delete</th></tr></tr><tr>");
+            out.println("<body><h1 align='center'>Delete Data</h1><table border=1 cellspacing=0 align='center'><tr><th>Roll No</th><th>First Name</th><th>Last Name</th><th>Stream</th><th>Update</th></tr><tr>");
             
             Connection con = null;
-//            ResultSet rs = null;
             Statement st = null;
             ServletContext sc = getServletContext();
             String url = null;
@@ -76,49 +79,15 @@ public class DeleteServlet extends HttpServlet {
                 con = DriverManager.getConnection(url,"root","");
                 st = con.createStatement();
                 ResultSet rs  = st.executeQuery("select * from student");
-                String query = "DELETE FROM student WHERE roll_no = ?";
-                PreparedStatement pst = con.prepareStatement(query);
-                String rollNoParam = request.getParameter("roll_no");
-                while(rs.next()){
-                    // out.println("<td>"+rs.getInt("roll_no")+"</td><td>"+rs.getString("f_name")+"</td><td>"+rs.getString("l_name")+"</td><td>"+rs.getString("stream")+"</td><td><a href=\"DeleteServlet?roll_no=\" "+rs.getInt("roll_no")+">Delete</a></td></tr>");
-                    out.println("<td>" + rs.getInt("roll_no") + "</td><td>" + rs.getString("f_name") + "</td><td>" + rs.getString("l_name") + "</td><td>" + rs.getString("stream") + "</td><td><a  href=\"DeleteServlet?roll_no=" + rs.getInt("roll_no") + "\">Delete</a></td></tr>");
-
-                }
-//                String query = "DELETE FROM student WHERE roll_no = ?";
-//                PreparedStatement pst = con.prepareStatement(query);
-//                String rollNoParam = request.getParameter("roll_no");
-    
-    // Convert roll_no parameter to integer
-                if (rollNoParam != null && !rollNoParam.isEmpty()) {
-                    try {
-                        int rollNo = Integer.parseInt(rollNoParam);
-                        pst.setInt(1, rollNo);
-                // Execute the deletion query
-                        pst.executeUpdate();
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace(); // Handle parsing error
-                    }}
-                // int rollNo = Integer.parseInt(rollNoParam);
-                //pst.setInt(1, rollNo);
-                // Execute the deletion query
-                //pst.executeUpdate();
-//                int rss = st.executeUpdate("delete from student where roll_no=?");
+                HttpSession session = request.getSession();
                 
-//                String rollNoParam = request.getParameter("roll_no");
-//                int rn = Integer.parseInt(rollNoParam);
-//                String fn = request.getParameter("f_name");
-//                String ln = request.getParameter("l_name");
-//                String s = request.getParameter("stream");
-//                
-            }catch(Exception e){
-                e.printStackTrace();
+                while(rs.next()){
+//                    session.setAttribute("id", rs.getInt("roll_no"));
+                    out.println("<td>"+rs.getInt("roll_no")+"</td><td>"+rs.getString("f_name")+"</td><td>"+rs.getString("l_name")+"</td><td>"+rs.getString("stream") + "</td><td><form action=\"deleteServlet2\" method=\"post\"><input type=\"hidden\" name=\"roll_no\" value=\"" + rs.getInt("roll_no") + "\"><input type=\"submit\" value=\"Delete\"></form></td></tr>");
+                }
+            }catch(ClassNotFoundException | SQLException e){
             }
-            out.println("<script>"
-                    + "function autoRefresh() {\n" +
-                        "            window.location = window.location.href;\n" +
-                        "        }\n" +
-                        "        setInterval('autoRefresh()', 2000);"
-                    + "</script>");
+            
             out.println("</body>");
             out.println("</html>");
         }

@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -34,6 +35,67 @@ public class updateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet displayServlet</title>");            
+//            out.println("</head><style>\n" +
+//                        "            table{\n" +
+//                        "                width:50%;\n" +
+//                        "                height: 100px;\n" +
+//                        "                margin-top: 100px;\n" +
+//                        "                font-size: 25px;\n" +
+//                        "            }\n" +
+//                        "            input{\n" +
+//                        "                padding: 10px;\n" +
+//                        "                margin:0px;\n" +
+//                        "            }\n"
+//                                            + "th{\n" +
+//                        "                background-color: aquamarine;\n" +
+//                        "            }\n" +
+//                        "            td{\n" +
+//                        "                background-color: aqua;\n" +
+//                        "            }\n" +
+//                        "            body{\n" +
+//                        "                background-color: antiquewhite;\n" +
+//                        "            }\n" +
+//                        "            input{\n" +
+//                        "                background-color: aquamarine;\n" +
+//                        "            }" +
+//                        "        </style>");
+//            out.println("<body><h1 align='center'>Update Data</h1><table border=1 cellspacing=0 align='center'><tr><th>Roll No</th><th>First Name</th><th>Last Name</th><th>Stream</th><th>Update</th></tr><tr>");
+//            
+//            Connection con = null;
+////            ResultSet rs = null;
+//            Statement st = null;
+//            ServletContext sc = getServletContext();
+//            String url = null;
+//            try{
+//                Class.forName("com.mysql.jdbc.Driver");
+//                url = sc.getInitParameter("url");
+//                con = DriverManager.getConnection(url,"root","");
+//                st = con.createStatement();
+//                ResultSet rs  = st.executeQuery("select * from student");
+//                while(rs.next()){
+//                    out.println("<td>"+rs.getInt("roll_no")+"</td><td>"+rs.getString("f_name")+"</td><td>"+rs.getString("l_name")+"</td><td>"+rs.getString("stream") + "</td><td><a  href=\"updateJSP.jsp?roll_no=" + rs.getInt("roll_no") + "\">Edit</a></td></tr>");
+//                    
+//                }
+////                String rollNoParam = request.getParameter("roll_no");
+////                int rn = Integer.parseInt(rollNoParam);
+////                String fn = request.getParameter("f_name");
+////                String ln = request.getParameter("l_name");
+////                String s = request.getParameter("stream");
+////                
+//            }catch(Exception e){
+//                e.printStackTrace();
+//            }
+//            
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -61,13 +123,12 @@ public class updateServlet extends HttpServlet {
                         "                background-color: antiquewhite;\n" +
                         "            }\n" +
                         "            input{\n" +
-                        "                background-color: aquamarine;\n" +
+                        "                width:100%;background-color: aquamarine;\n" +
                         "            }" +
                         "        </style>");
             out.println("<body><h1 align='center'>Update Data</h1><table border=1 cellspacing=0 align='center'><tr><th>Roll No</th><th>First Name</th><th>Last Name</th><th>Stream</th><th>Update</th></tr><tr>");
             
             Connection con = null;
-//            ResultSet rs = null;
             Statement st = null;
             ServletContext sc = getServletContext();
             String url = null;
@@ -78,17 +139,9 @@ public class updateServlet extends HttpServlet {
                 st = con.createStatement();
                 ResultSet rs  = st.executeQuery("select * from student");
                 while(rs.next()){
-                    out.println("<td>"+rs.getInt("roll_no")+"</td><td>"+rs.getString("f_name")+"</td><td>"+rs.getString("l_name")+"</td><td>"+rs.getString("stream") + "</td><td><a  href=\"updateJSP.jsp?roll_no=" + rs.getInt("roll_no") + "\">Edit</a></td></tr>");
-                    
+                    out.println("<td>"+rs.getInt("roll_no")+"</td><td>"+rs.getString("f_name")+"</td><td>"+rs.getString("l_name")+"</td><td>"+rs.getString("stream") + "</td><td><form action=\"updateJSP.jsp\" method=\"post\"><input type=\"hidden\" name=\"roll_no\" value=\"" + rs.getInt("roll_no") + "\"><input type=\"submit\" value=\"Edit\"></form></td></tr>");
                 }
-//                String rollNoParam = request.getParameter("roll_no");
-//                int rn = Integer.parseInt(rollNoParam);
-//                String fn = request.getParameter("f_name");
-//                String ln = request.getParameter("l_name");
-//                String s = request.getParameter("stream");
-//                
-            }catch(Exception e){
-                e.printStackTrace();
+            }catch(ClassNotFoundException | SQLException e){
             }
             
             out.println("</body>");

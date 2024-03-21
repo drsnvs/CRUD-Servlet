@@ -41,10 +41,10 @@
         
         <form  action="updateServlet2" method="POST" onsubmit="return validation()">
             <table cellspacing = 0 align="center" border="1">
-                <tr>
+<!--                <tr>
                     <td>Roll No: </td>
                     <td><input type="number" id="roll_no" value=<% out.println(request.getParameter("roll_no")); %> name="roll_no" readonly></td>
-                </tr>
+                </tr>-->
                 <%
                     Connection con = null;
 //            ResultSet rs = null;  
@@ -76,7 +76,7 @@
                     <td><input type="text" id="stream" name="stream" value=<% out.println(s); %> ></td>
                 </tr>
                 <tr>
-                    <td colspan="2" align="center"><input type="submit" value="Submit" name="submit"></td>
+                    <td colspan="2" align="center"><input type="submit" value="Update" name="submit"></td>
                 </tr>
             </table>
         </form>
