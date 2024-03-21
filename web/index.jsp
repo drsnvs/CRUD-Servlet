@@ -36,6 +36,11 @@
         </style>
     </head>
     <body>
+        <%
+            HttpSession ssn = request.getSession();
+            ssn.setAttribute("key", ssn.getId());
+        %>
+        
         <table cellspacing = 0 align="center" border="1">
             <tr>
                 <th colspan="4" >Student Table</th>

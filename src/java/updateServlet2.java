@@ -32,9 +32,12 @@ public class updateServlet2 extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         ServletContext sc = getServletContext();
         HttpSession session = request.getSession();
-        
+        if(!session.getId().equals(session.getAttribute("key"))){
+            response.sendRedirect("index.jsp");
+        }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -48,7 +51,7 @@ public class updateServlet2 extends HttpServlet {
             
             PreparedStatement pr = con.prepareStatement("update student set f_name=?,l_name=?,stream=? where roll_no="+request.getParameter("roll_no")+";");
 //            pr.setInt(1, Integer.parseInt((String) request.getParameter("roll_no")));
-            pr.setString(1, request.getParameter("fname"));
+            pr.setString(1, (String) request.getParameter("fname"));
             pr.setString(2, (String) request.getParameter("lname"));
             pr.setString(3, (String) request.getParameter("stream"));
 //            pr.setInt(4, Integer.parseInt((String) request.getParameter("roll_no")));
@@ -80,7 +83,7 @@ public class updateServlet2 extends HttpServlet {
                 out.println("<tr><td align='center'><button onclick=\"document.location='index.jsp'\">Home</button></td></tr>");
                 
             }else{
-                out.println("<tr><td>Data cannot updated!</td></tr>");
+                out.println("<tr><td>"+request.getParameter("roll_no")+"Data cannot updated!</td></tr>");
             }
             
             out.println("</table></body>");

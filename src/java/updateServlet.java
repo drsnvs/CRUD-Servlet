@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -97,6 +98,10 @@ public class updateServlet extends HttpServlet {
 //        }
 
         try (PrintWriter out = response.getWriter()) {
+            HttpSession session = request.getSession();
+            if(!session.getId().equals(session.getAttribute("key"))){
+                response.sendRedirect("index.jsp");
+            }
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -142,6 +147,7 @@ public class updateServlet extends HttpServlet {
                     out.println("<td>"+rs.getInt("roll_no")+"</td><td>"+rs.getString("f_name")+"</td><td>"+rs.getString("l_name")+"</td><td>"+rs.getString("stream") + "</td><td><form action=\"updateJSP.jsp\" method=\"post\"><input type=\"hidden\" name=\"roll_no\" value=\"" + rs.getInt("roll_no") + "\"><input type=\"submit\" value=\"Edit\"></form></td></tr>");
                 }
             }catch(ClassNotFoundException | SQLException e){
+                e.printStackTrace();
             }
             
             out.println("</body>");

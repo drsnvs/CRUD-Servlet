@@ -11,6 +11,12 @@
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    HttpSession ssn = request.getSession();
+    if(!ssn.getId().equals(ssn.getAttribute("key"))){
+        response.sendRedirect("index.jsp");
+    }
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -63,6 +69,9 @@
                     String ln = rs.getString("l_name");
                     String s = rs.getString("stream");
                 %>
+                
+                    <input type="hidden" name="roll_no" value=<% out.println(request.getParameter("roll_no")); %>>
+                
                 <tr>
                     <td>First Name: </td>
                     <td><input type="text" id="first_name" name="fname" value=<% out.println(fn); %> ></td>

@@ -32,7 +32,12 @@
         </style>
     </head>
     <body>
-        
+        <%
+            HttpSession ssn = request.getSession();
+            if(!ssn.getId().equals(ssn.getAttribute("key"))){
+                response.sendRedirect("index.jsp");
+            }
+        %>
         
         <form  action="insertServlet" method="POST" onsubmit="return validation()">
             <table cellspacing = 0 align="center" border="1">

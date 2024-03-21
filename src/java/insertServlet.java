@@ -34,6 +34,11 @@ public class insertServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("name", "Darshan");
         try (PrintWriter out = response.getWriter()) {
+            
+            
+            if(!session.getId().equals(session.getAttribute("key"))){
+                response.sendRedirect("index.jsp");
+            }
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");

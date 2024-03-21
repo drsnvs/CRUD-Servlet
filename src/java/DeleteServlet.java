@@ -38,6 +38,11 @@ public class DeleteServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
+            HttpSession session = request.getSession();
+            if(!session.getId().equals(session.getAttribute("key"))){
+                response.sendRedirect("index.jsp");
+            }
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -79,7 +84,7 @@ public class DeleteServlet extends HttpServlet {
                 con = DriverManager.getConnection(url,"root","");
                 st = con.createStatement();
                 ResultSet rs  = st.executeQuery("select * from student");
-                HttpSession session = request.getSession();
+                
                 
                 while(rs.next()){
 //                    session.setAttribute("id", rs.getInt("roll_no"));
