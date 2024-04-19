@@ -1,0 +1,20 @@
+--
+-- Table structure for table `student`
+--
+
+CREATE TABLE `student` (
+  `roll_no` int(11) NOT NULL,
+  `f_name` varchar(45) NOT NULL,
+  `l_name` varchar(45) NOT NULL,
+  `stream` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`roll_no`, `f_name`, `l_name`, `stream`) VALUES
+(1, 'Darshan', 'Sarvaiy', 'BCA-MCA'),
+(2, 'Smit', 'Thakar', 'MCA'),
+(3, 'Vaidik', 'Limbachiya', 'BCA-MCA'),
+(4, 'Mansi', 'Ahir', 'MCA');
